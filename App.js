@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, ImageBackground } from 'react-native';
+import { StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
 
 // enable transitions between multiple colors in a linear direction.
 import { LinearGradient } from 'expo-linear-gradient';
@@ -31,7 +31,8 @@ export default function App() {
           resizeMode='cover' // the image keeps its aspect ratio and fills the given dimension.
           imageStyle={{ opacity: 0.15 }} // the opacity of the image.
           style={styles.rootScreen}>
-          {screen}
+          {/* SafeAreaView to render content within the safe area boundaries of a device. It is currently only applicable to iOS devices. */}
+          <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
         </ImageBackground>
       </LinearGradient>
     </>
