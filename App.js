@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, ImageBackground } from 'react-native';
 
@@ -5,8 +6,20 @@ import { StyleSheet, ImageBackground } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import StartGameScreen from './screens/StartGameScreen';
+import GameScreen from './screens/GameScreen';
 
 export default function App() {
+  const [userNumber, setUserNumber] = useState();
+
+  function pickedNumberHandler(pickedNumber) {
+    setUserNumber(pickedNumber);
+  }
+
+  let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
+  if (userNumber) {
+    screen = <GameScreen userNumber={userNumber} />;
+  }
+
   return (
     <>
       <StatusBar style='light' />
@@ -18,7 +31,7 @@ export default function App() {
           resizeMode='cover' // the image keeps its aspect ratio and fills the given dimension.
           imageStyle={{ opacity: 0.15 }} // the opacity of the image.
           style={styles.rootScreen}>
-          <StartGameScreen />
+          {screen}
         </ImageBackground>
       </LinearGradient>
     </>
