@@ -2,11 +2,7 @@
 
 import { Text, View, Pressable, StyleSheet } from 'react-native';
 
-function PrimaryButton({ children }) {
-  function pressHandler() {
-    console.log('pressed');
-  }
-
+function PrimaryButton({ children, onPress }) {
   return (
     <View style={styles.buttonOuterContainer}>
       <Pressable
@@ -14,7 +10,7 @@ function PrimaryButton({ children }) {
         style={({ pressed }) =>
           pressed ? [styles.buttonInnerContainer, styles.pressed] : styles.buttonInnerContainer
         }
-        onPress={pressHandler}
+        onPress={onPress} // 'onPress' function (props) to be called when the button is pressed.
         // ripple effect for Android.
         android_ripple={{ color: '#640233' }}>
         <Text style={styles.buttonText}>{children}</Text>
