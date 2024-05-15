@@ -28,13 +28,12 @@ export default StartGameScreen;
 
 const styles = StyleSheet.create({
   inputContainer: {
-    // flex: 1, // takes up all available space, as there are no sibling elements.
     justifyContent: 'center', // position elements along the main axis (default - column).
     alignItems: 'center', // position elements along the cross axis.
     marginTop: 100,
     marginHorizontal: 24,
     padding: 16,
-    backgroundColor: '#4e0329',
+    backgroundColor: '#3b021f',
     borderRadius: 8,
     // shadow setting for Android
     elevation: 4,
