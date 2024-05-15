@@ -5,7 +5,13 @@ import PrimaryButton from '../components/PrimaryButton.js';
 function StartGameScreen() {
   return (
     <View style={styles.inputContainer}>
-      <TextInput placeholder='Enter a number' />
+      <TextInput
+        style={styles.numberInput}
+        maxLength={2} // limits the maximum number of characters that can be entered.
+        keyboardType='number-pad' // determines which keyboard to open.
+        autoCapitalize='none' // determines whether to capitalize the first letter of a word (not releavnt for numeric values).
+        autoCorrect={false} // determines whether to automatically correct the input.
+      />
       <PrimaryButton>Reset</PrimaryButton>
       <PrimaryButton>Confirm</PrimaryButton>
     </View>
@@ -29,5 +35,17 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.25
+  },
+
+  numberInput: {
+    height: 50,
+    width: 50,
+    fontSize: 32,
+    borderBottomColor: '#ddb52f',
+    borderBottomWidth: 2,
+    color: '#ddb52f', // text color
+    marginVertical: 8,
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 });
