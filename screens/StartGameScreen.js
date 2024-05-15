@@ -12,8 +12,14 @@ function StartGameScreen() {
         autoCapitalize='none' // determines whether to capitalize the first letter of a word (not releavnt for numeric values).
         autoCorrect={false} // determines whether to automatically correct the input.
       />
-      <PrimaryButton>Reset</PrimaryButton>
-      <PrimaryButton>Confirm</PrimaryButton>
+      <View style={styles.buttonsContainer}>
+        <View style={styles.buttonContainer}>
+          <PrimaryButton>Reset</PrimaryButton>
+        </View>
+        <View style={styles.buttonContainer}>
+          <PrimaryButton>Confirm</PrimaryButton>
+        </View>
+      </View>
     </View>
   );
 }
@@ -23,6 +29,8 @@ export default StartGameScreen;
 const styles = StyleSheet.create({
   inputContainer: {
     // flex: 1, // takes up all available space, as there are no sibling elements.
+    justifyContent: 'center', // position elements along the main axis (default - column).
+    alignItems: 'center', // position elements along the cross axis.
     marginTop: 100,
     marginHorizontal: 24,
     padding: 16,
@@ -47,5 +55,13 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+
+  buttonsContainer: {
+    flexDirection: 'row'
+  },
+
+  buttonContainer: {
+    flex: 1
   }
 });
