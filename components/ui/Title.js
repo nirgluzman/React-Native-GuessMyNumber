@@ -17,6 +17,8 @@ const styles = StyleSheet.create({
     textAlign: 'center', // center the text horizontally.
     borderWidth: 2,
     borderColor: Colors.accent500,
-    padding: 12
+    padding: 12,
+    maxWidth: '80%', // % refers to parent container; setting maxWidth to solve layout issues with small screens.
+    width: 300
   }
 });
