@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View, Image, Text, Dimensions } from 'react-native';
 
 import Title from '../components/ui/Title';
 import PrimaryButton from '../components/ui/PrimaryButton';
@@ -29,6 +29,10 @@ function GameOverScreen({ userNumber, roundsNumber, onStartNewGame }) {
 
 export default GameOverScreen;
 
+// get the application window's width (available viewport).
+// note that this value is evaluated only once when the code is first executed (it does not adjust to device orientation).
+const deviceWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
@@ -39,9 +43,9 @@ const styles = StyleSheet.create({
 
   imageContainer: {
     // circle image
-    width: 300,
-    height: 300,
-    borderRadius: 150,
+    width: deviceWidth < 380 ? 150 : 300,
+    height: deviceWidth < 380 ? 150 : 300,
+    borderRadius: deviceWidth < 380 ? 75 : 150,
     borderWidth: 3,
     borderColor: Colors.primary800,
     overflow: 'hidden', // to hide the image original border.
