@@ -69,12 +69,19 @@ function GameScreen({ userNumber, onGameOver }) {
 
       {/* Player feedback to number guess */}
       <Card>
-        <InstructionText>Is your number Higher or Lower?</InstructionText>
+        <InstructionText style={styles.instructionText}>
+          Is your number Higher or Lower?
+        </InstructionText>
         {/* Buttons */}
-        <View>
-          {/* we use the 'bind' method to pass/pre-configure the context of this function to the onPress handler. */}
-          <PrimaryButton onPress={nextGuessHandler.bind(this, 'higher')}>+</PrimaryButton>
-          <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>-</PrimaryButton>
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            {/* we use the 'bind' method to pass/pre-configure the context of this function to the onPress handler. */}
+            <PrimaryButton onPress={nextGuessHandler.bind(this, 'higher')}>+</PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            {/* we use the 'bind' method to pass/pre-configure the context of this function to the onPress handler. */}
+            <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>-</PrimaryButton>
+          </View>
         </View>
       </Card>
 
@@ -90,5 +97,18 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1, // takes up all available space, as there are no sibling elements.
     padding: 24
+  },
+
+  instructionText: {
+    marginBottom: 12,
+    fontSize: 18 // overriding the fontSize defined in InstructionText component.
+  },
+
+  buttonsContainer: {
+    flexDirection: 'row'
+  },
+
+  buttonContainer: {
+    flex: 1
   }
 });
