@@ -34,7 +34,7 @@ function GameScreen({ userNumber, onGameOver }) {
 
   useEffect(() => {
     if (currentGuess === userNumber) {
-      onGameOver();
+      onGameOver(guessRoundsListLength);
 
       // Alert.alert('GAME OVER!', 'Number is found!', [{ text: 'Ok', style: 'default' }]);
     }

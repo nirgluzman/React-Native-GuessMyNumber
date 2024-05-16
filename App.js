@@ -49,8 +49,9 @@ export default function App() {
     setGameIsOver(false); // set gameIsOver to false once we start a game to show the GameScreen.
   }
 
-  function gameOverHandler() {
+  function gameOverHandler(numberOfRounds) {
     setGameIsOver(true);
+    setGuessRounds(numberOfRounds);
   }
 
   function startNewGameHandler() {
