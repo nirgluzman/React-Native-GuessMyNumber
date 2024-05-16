@@ -22,6 +22,7 @@ function generateRandomBetween(min, max, exclude) {
   }
 }
 
+// boundaries for the random number generator (to be set only once, when the component is mounted for the first time).
 let minBoundary = 1;
 let maxBoundary = 100;
 
@@ -33,9 +34,19 @@ function GameScreen({ userNumber, onGameOver }) {
     if (currentGuess === userNumber) {
       onGameOver();
 
-      Alert.alert('GAME OVER!', 'Guessed number is found!', [{ text: 'Ok', style: 'default' }]);
+      // Alert.alert('GAME OVER!', 'Number is found!', [{ text: 'Ok', style: 'default' }]);
     }
   }, [currentGuess, userNumber, onGameOver]);
+
+  // useEffect hook to reset the boundaries when the user starts a new game.
+  useEffect(
+    () => {
+      minBoundary = 1;
+      maxBoundary = 100;
+    },
+    // we need to pass an empty array to the useEffect hook to make sure that the boundaries are reset when the user starts a new game (component is rendered for the first time).
+    []
+  );
 
   function nextGuessHandler(direction) {
     // verifying that the user does not provide wrong info, to avoid infinite loop with the app logic.
