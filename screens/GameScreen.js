@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, Alert, View, Text, FlatList } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons'; // various types of icons
 
@@ -8,6 +8,7 @@ import Card from '../components/ui/Card';
 import InstructionText from '../components/ui/InstructionText.js';
 import NumberContainer from '../components/game/NumberContainer.js';
 import PrimaryButton from '../components/ui/PrimaryButton';
+import GuessLogItem from '../components/game/GuessLogItem.js';
 
 // function to generate a random number between 'min' and 'max', excluding the 'exclude' number (this is for the inital guess to make sure that it is not the userNumber).
 // this function is recursive, so it will keep calling itself until it finds a number that is not the userNumber.
@@ -29,6 +30,7 @@ let maxBoundary = 100;
 function GameScreen({ userNumber, onGameOver }) {
   const initialGuess = generateRandomBetween(1, 100, userNumber); // making sure that the initial guess is not the userNumber.
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [roundsData, setRoundsData] = useState([initialGuess]);
 
   useEffect(() => {
     if (currentGuess === userNumber) {
@@ -70,7 +72,13 @@ function GameScreen({ userNumber, onGameOver }) {
 
     const newRndNumber = generateRandomBetween(minBoundary, maxBoundary, currentGuess);
     setCurrentGuess(newRndNumber);
+
+    // add newRndNumber to roundsData array.
+    setRoundsData(prevRoundsData => [newRndNumber, ...prevRoundsData]); // we use the spread operator to add the newRndNumber to roundsData array.
   }
+
+  // calculated every time the component is rendered.
+  const guessRoundsListLength = roundsData.length;
 
   return (
     <View style={styles.screen}>
@@ -111,7 +119,22 @@ function GameScreen({ userNumber, onGameOver }) {
       </Card>
 
       {/* Log rounds */}
-      <View></View>
+      <View style={styles.listContainer}>
+        {/* {roundsData.map(roundData => (<Text key={roundData}>{roundData}</Text>))} */}
+        <FlatList
+          data={roundsData} // array of data to output
+          renderItem={
+            // function to take one item from the source and returns a formatted component to render.
+            itemData => (
+              <GuessLogItem
+                roundNumber={guessRoundsListLength - itemData.index}
+                guess={itemData.item}
+              />
+            )
+          }
+          keyExtractor={item => item} // tells FlatList to use the 'item' itself for the react keys instead of the default 'key' property.
+        />
+      </View>
     </View>
   );
 }
@@ -135,5 +158,11 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     flex: 1
+  },
+
+  // set the size of the FlatList container to enable scrolling.
+  listContainer: {
+    flex: 1, // takes the max available space.
+    padding: 16
   }
 });
