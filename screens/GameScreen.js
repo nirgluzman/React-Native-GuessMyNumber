@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Alert } from 'react-native';
 
 import Title from '../components/ui/Title';
@@ -21,9 +21,17 @@ function generateRandomBetween(min, max, exclude) {
 let minBoundary = 1;
 let maxBoundary = 100;
 
-function GameScreen({ userNumber }) {
-  const initialGuess = generateRandomBetween(minBoundary, maxBoundary, userNumber); // making sure that the initial guess is not the userNumber.
+function GameScreen({ userNumber, onGameOver }) {
+  const initialGuess = generateRandomBetween(1, 100, userNumber); // making sure that the initial guess is not the userNumber.
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+
+  useEffect(() => {
+    if (currentGuess === userNumber) {
+      onGameOver();
+
+      Alert.alert('GAME OVER!', 'Guessed number is found!', [{ text: 'Ok', style: 'default' }]);
+    }
+  }, [currentGuess, userNumber, onGameOver]);
 
   function nextGuessHandler(direction) {
     // verifying that the user does not provide wrong info, to avoid infinite loop with the app logic.
@@ -57,7 +65,7 @@ function GameScreen({ userNumber }) {
       <NumberContainer>{currentGuess}</NumberContainer>
       {/* Player feedback to number guess */}
       <View>
-        <Text>Is it Higher or Lower?</Text>
+        <Text>Is your number Higher or Lower?</Text>
         {/* Buttons */}
         <View>
           {/* we use the 'bind' method to pass/pre-configure the context of this function to the onPress handler. */}
