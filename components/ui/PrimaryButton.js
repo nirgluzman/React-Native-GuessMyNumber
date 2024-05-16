@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
 
   buttonText: {
     color: 'white', // we cannot add the text styling within the <View>, we must add the text styling within the <Text> component as there is no inheritance in React Native.
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: 'open-sans'
   },
 
   pressed: {

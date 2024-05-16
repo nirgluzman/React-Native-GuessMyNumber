@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
 
+import { Ionicons } from '@expo/vector-icons'; // various types of icons
+
 import Title from '../components/ui/Title';
 import Card from '../components/ui/Card';
 import InstructionText from '../components/ui/InstructionText.js';
@@ -76,11 +78,23 @@ function GameScreen({ userNumber, onGameOver }) {
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
             {/* we use the 'bind' method to pass/pre-configure the context of this function to the onPress handler. */}
-            <PrimaryButton onPress={nextGuessHandler.bind(this, 'higher')}>+</PrimaryButton>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, 'higher')}>
+              <Ionicons
+                name='add-outline'
+                size={24}
+                color='white'
+              />
+            </PrimaryButton>
           </View>
           <View style={styles.buttonContainer}>
             {/* we use the 'bind' method to pass/pre-configure the context of this function to the onPress handler. */}
-            <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>-</PrimaryButton>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>
+              <Ionicons
+                name='remove'
+                size={24}
+                color='white'
+              />
+            </PrimaryButton>
           </View>
         </View>
       </Card>
@@ -101,7 +115,7 @@ const styles = StyleSheet.create({
 
   instructionText: {
     marginBottom: 12,
-    fontSize: 18 // overriding the fontSize defined in InstructionText component.
+    fontSize: 16 // overriding the fontSize defined in InstructionText component.
   },
 
   buttonsContainer: {
