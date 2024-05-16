@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Alert } from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
 
 import Title from '../components/ui/Title';
+import Card from '../components/ui/Card';
+import InstructionText from '../components/ui/InstructionText.js';
 import NumberContainer from '../components/game/NumberContainer.js';
 import PrimaryButton from '../components/ui/PrimaryButton';
 
@@ -61,18 +63,21 @@ function GameScreen({ userNumber, onGameOver }) {
     <View style={styles.screen}>
       {/* Title */}
       <Title>Opponent's Guess</Title>
-      {/* Number Guess */}
+
+      {/* Number guessed */}
       <NumberContainer>{currentGuess}</NumberContainer>
+
       {/* Player feedback to number guess */}
-      <View>
-        <Text>Is your number Higher or Lower?</Text>
+      <Card>
+        <InstructionText>Is your number Higher or Lower?</InstructionText>
         {/* Buttons */}
         <View>
           {/* we use the 'bind' method to pass/pre-configure the context of this function to the onPress handler. */}
           <PrimaryButton onPress={nextGuessHandler.bind(this, 'higher')}>+</PrimaryButton>
           <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>-</PrimaryButton>
         </View>
-      </View>
+      </Card>
+
       {/* Log rounds */}
       <View></View>
     </View>

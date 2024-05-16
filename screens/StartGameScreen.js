@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import { Text, TextInput, View, StyleSheet, Alert } from 'react-native';
+import { TextInput, View, StyleSheet, Alert } from 'react-native';
 
 import Title from '../components/ui/Title.js';
+import Card from '../components/ui/Card.js';
+import InstructionText from '../components/ui/InstructionText.js';
 import PrimaryButton from '../components/ui/PrimaryButton.js';
+
 import Colors from '../constants/colors.js';
 
 function StartGameScreen({ onPickNumber }) {
@@ -35,8 +38,8 @@ function StartGameScreen({ onPickNumber }) {
   return (
     <View style={styles.rootContainer}>
       <Title>Guess My Number</Title>
-      <View style={styles.inputContainer}>
-        <Text style={styles.instructionText}>Enter a Number</Text>
+      <Card>
+        <InstructionText>Enter a Number</InstructionText>
         <TextInput
           style={styles.numberInput}
           maxLength={2} // limits the maximum number of characters that can be entered.
@@ -54,7 +57,7 @@ function StartGameScreen({ onPickNumber }) {
             <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
           </View>
         </View>
-      </View>
+      </Card>
     </View>
   );
 }
@@ -66,28 +69,6 @@ const styles = StyleSheet.create({
     flex: 1, // takes up all available space, as there are no sibling elements.
     marginTop: 100,
     alignItems: 'center'
-  },
-
-  inputContainer: {
-    justifyContent: 'center', // position elements along the main axis (default - column).
-    alignItems: 'center', // position elements along the cross axis.
-    marginTop: 36,
-    marginHorizontal: 24,
-    padding: 16,
-    backgroundColor: Colors.primary800,
-    borderRadius: 8,
-    // shadow setting for Android
-    elevation: 4,
-    // shadow setting for iOS, https://reactnative.dev/docs/shadow-props
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    shadowOpacity: 0.25
-  },
-
-  instructionText: {
-    color: Colors.accent500,
-    fontSize: 24
   },
 
   numberInput: {
