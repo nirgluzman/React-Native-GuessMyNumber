@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { TextInput, View, StyleSheet, Alert, useWindowDimensions } from 'react-native';
+import {
+  TextInput,
+  View,
+  StyleSheet,
+  Alert,
+  useWindowDimensions,
+  KeyboardAvoidingView, // automatically adjust its height, position, or bottom padding based on the keyboard height to remain visible while the virtual keyboard is displayed.
+  ScrollView
+} from 'react-native';
 
 import Title from '../components/ui/Title.js';
 import Card from '../components/ui/Card.js';
@@ -40,36 +48,50 @@ function StartGameScreen({ onPickNumber }) {
   }
 
   return (
-    // marginTop is re-evaluated every time the screen size changes (device orientation).
-    <View style={[styles.rootContainer, { marginTop: marginTopDistance }]}>
-      <Title>Guess My Number</Title>
-      <Card>
-        <InstructionText>Enter a Number</InstructionText>
-        <TextInput
-          style={styles.numberInput}
-          maxLength={2} // limits the maximum number of characters that can be entered.
-          keyboardType='number-pad' // determines which keyboard to open.
-          autoCapitalize='none' // determines whether to capitalize the first letter of a word (not releavnt for numeric values).
-          autoCorrect={false} // determines whether to automatically correct the input.
-          value={enteredNumber}
-          onChangeText={numberInputHandler}
-        />
-        <View style={styles.buttonsContainer}>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
-          </View>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
-          </View>
+    <ScrollView style={styles.screen}>
+      {/* 'KeyboardAvoidingView' is used to avoid the keyboard from covering our app. */}
+      {/* 'ScrollView' is used to give a better experience - scrolling the app while the keyboard occupies the screen. */}
+      <KeyboardAvoidingView
+        style={styles.screen}
+        behavior='position' // specify how to react to the presence of the keyboard.
+      >
+        <View
+          style={[styles.rootContainer, { marginTop: marginTopDistance }]} // marginTop is re-evaluated every time the screen size changes (device orientation).
+        >
+          <Title>Guess My Number</Title>
+          <Card>
+            <InstructionText>Enter a Number</InstructionText>
+            <TextInput
+              style={styles.numberInput}
+              maxLength={2} // limits the maximum number of characters that can be entered.
+              keyboardType='number-pad' // determines which keyboard to open.
+              autoCapitalize='none' // determines whether to capitalize the first letter of a word (not releavnt for numeric values).
+              autoCorrect={false} // determines whether to automatically correct the input.
+              value={enteredNumber}
+              onChangeText={numberInputHandler}
+            />
+            <View style={styles.buttonsContainer}>
+              <View style={styles.buttonContainer}>
+                <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+              </View>
+              <View style={styles.buttonContainer}>
+                <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+              </View>
+            </View>
+          </Card>
         </View>
-      </Card>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 
 export default StartGameScreen;
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1
+  },
+
   rootContainer: {
     flex: 1, // takes up all available space, as there are no sibling elements.
     marginTop: 100,
