@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, Alert, View, Text, FlatList } from 'react-native';
+import { StyleSheet, Alert, View, FlatList, useWindowDimensions } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons'; // various types of icons
 
@@ -31,6 +31,9 @@ function GameScreen({ userNumber, onGameOver }) {
   const initialGuess = generateRandomBetween(1, 100, userNumber); // making sure that the initial guess is not the userNumber.
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [roundsData, setRoundsData] = useState([initialGuess]);
+
+  // useWindowDimensions hook to get dynamically (automatically updates) the width and height of the device.
+  const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     if (currentGuess === userNumber) {
@@ -80,16 +83,15 @@ function GameScreen({ userNumber, onGameOver }) {
   // calculated every time the component is rendered.
   const guessRoundsListLength = roundsData.length;
 
-  return (
-    <View style={styles.screen}>
-      {/* Title */}
-      <Title>Opponent's Guess</Title>
-
+  // phone in portrait mode
+  let content = (
+    <>
       {/* Number guessed */}
       <NumberContainer>{currentGuess}</NumberContainer>
 
       {/* Player feedback to number guess */}
       <Card>
+        {/* Instruction text */}
         <InstructionText style={styles.instructionText}>
           Is your number Higher or Lower?
         </InstructionText>
@@ -117,6 +119,47 @@ function GameScreen({ userNumber, onGameOver }) {
           </View>
         </View>
       </Card>
+    </>
+  );
+
+  // phone in landscape mode
+  if (width > 500) {
+    content = (
+      <>
+        {/* Buttons + Number guessed */}
+        <View style={styles.buttonsContainerWide}>
+          <View style={styles.buttonContainer}>
+            {/* we use the 'bind' method to pass/pre-configure the context of this function to the onPress handler. */}
+            <PrimaryButton onPress={nextGuessHandler.bind(this, 'higher')}>
+              <Ionicons
+                name='add-outline'
+                size={24}
+                color='white'
+              />
+            </PrimaryButton>
+          </View>
+          <NumberContainer>{currentGuess}</NumberContainer>
+          <View style={styles.buttonContainer}>
+            {/* we use the 'bind' method to pass/pre-configure the context of this function to the onPress handler. */}
+            <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>
+              <Ionicons
+                name='remove'
+                size={24}
+                color='white'
+              />
+            </PrimaryButton>
+          </View>
+        </View>
+      </>
+    );
+  }
+
+  return (
+    <View style={styles.screen}>
+      {/* Title */}
+      <Title>Opponent's Guess</Title>
+
+      {content}
 
       {/* Log rounds */}
       <View style={styles.listContainer}>
@@ -155,6 +198,11 @@ const styles = StyleSheet.create({
 
   buttonsContainer: {
     flexDirection: 'row'
+  },
+
+  buttonsContainerWide: {
+    flexDirection: 'row',
+    alignItems: 'center'
   },
 
   buttonContainer: {
