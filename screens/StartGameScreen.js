@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TextInput, View, StyleSheet, Alert } from 'react-native';
+import { TextInput, View, StyleSheet, Alert, useWindowDimensions } from 'react-native';
 
 import Title from '../components/ui/Title.js';
 import Card from '../components/ui/Card.js';
@@ -10,6 +10,10 @@ import Colors from '../constants/colors.js';
 
 function StartGameScreen({ onPickNumber }) {
   const [enteredNumber, setEnteredNumber] = useState('');
+
+  // adjust dynamically to device orientation: 'useWindowDimensions' hook automatically updates all of its values when screen size or font scale changes.
+  const { width, height } = useWindowDimensions();
+  const marginTopDistance = height < 380 ? 30 : 100;
 
   function numberInputHandler(enteredText) {
     setEnteredNumber(enteredText);
@@ -36,7 +40,8 @@ function StartGameScreen({ onPickNumber }) {
   }
 
   return (
-    <View style={styles.rootContainer}>
+    // marginTop is re-evaluated every time the screen size changes (device orientation).
+    <View style={[styles.rootContainer, { marginTop: marginTopDistance }]}>
       <Title>Guess My Number</Title>
       <Card>
         <InstructionText>Enter a Number</InstructionText>
