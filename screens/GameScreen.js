@@ -187,6 +187,7 @@ export default GameScreen;
 const styles = StyleSheet.create({
   screen: {
     flex: 1, // takes up all available space, as there are no sibling elements.
+    marginTop: 20,
     padding: 24,
     alignItems: 'center'
   },
